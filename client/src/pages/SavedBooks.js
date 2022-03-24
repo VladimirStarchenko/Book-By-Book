@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Jumbotron,
   Container,
@@ -6,18 +6,18 @@ import {
   Card,
   Button,
 } from "react-bootstrap";
+
 import { useQuery, useMutation } from "@apollo/client";
 
+import { GET_ME } from "../utils/queries";
+import { REMOVE_BOOK } from "../utils/mutations";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
-import { GET_ME } from "../utils/queries.js";
-import { REMOVE_BOOK } from "../utils/mutations.js";
 
 const SavedBooks = () => {
-  // useQuery hook
   const { data: userData, loading } = useQuery(GET_ME);
-  // useMutation hook
   const [remove_book, { error }] = useMutation(REMOVE_BOOK);
+  // use this to determine if `useEffect()` hook needs to run again
 
   if (loading) {
     return <h2>LOADING...</h2>;
@@ -32,10 +32,7 @@ const SavedBooks = () => {
     }
 
     try {
-      // eslint-disable-next-line
-      const { data: response } = await remove_book({
-        variables: { bookId },
-      });
+      const { data: response } = await remove_book({ variables: { bookId } });
 
       if (error) {
         throw new Error("something went wrong!");
