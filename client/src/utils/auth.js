@@ -33,14 +33,15 @@ class AuthService {
   // retrieve token from localStorage
   getToken() {
     // Retrieves the user token from localStorage
-    return localStorage.getItem("id_token");
+    let token = localStorage.getItem("id_token");
+
+    return token;
   }
 
   // set token to localStorage and reload page to homepage
   login(idToken) {
     // Saves user token to localStorage
     localStorage.setItem("id_token", idToken);
-
     window.location.assign("/");
   }
 

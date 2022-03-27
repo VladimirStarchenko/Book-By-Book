@@ -1,6 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User } = require("../models");
 const { signToken } = require("../utils/auth");
+const axios = require("axios");
 
 const resolvers = {
   // Get a user
@@ -54,7 +55,7 @@ const resolvers = {
           user._id,
           {
             $push: {
-              savedBooks: { savedBooks: input },
+              savedBooks: input,
             },
           },
           { new: true, runValidators: true }
